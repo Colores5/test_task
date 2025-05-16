@@ -1,13 +1,13 @@
 part of 'firmware_bloc.dart';
 
 abstract class FirmwareState extends Equatable {
-  final List<FirmwareUpdate> updates;
+  final List<FirmwareUpdate>? updates;
   final Map<String?, List<FirmwareUpdate>>? updatesGroupedByParentId;
   final bool hasCyclicDependencies;
   final List<String>? dependencyChain;
 
   const FirmwareState({
-    required this.updates,
+    this.updates,
     this.updatesGroupedByParentId,
     this.hasCyclicDependencies = false,
     this.dependencyChain,
@@ -15,7 +15,7 @@ abstract class FirmwareState extends Equatable {
 
   @override
   List<Object> get props => [
-    updates,
+    updates ?? [],
     updatesGroupedByParentId ?? {},
     hasCyclicDependencies,
     dependencyChain ?? [],
@@ -45,7 +45,7 @@ class FirmwareLoadedState extends FirmwareState {
 
   @override
   List<Object> get props => [
-    updates,
+    updates ?? [],
     updatesGroupedByParentId ?? {},
     hasCyclicDependencies,
     dependencyChain ?? [],
@@ -55,7 +55,7 @@ class FirmwareLoadedState extends FirmwareState {
 class FirmwareFailureState extends FirmwareState {
   final Object? extencion;
 
-  const FirmwareFailureState({required this.extencion, required super.updates});
+  const FirmwareFailureState({required this.extencion});
 
   @override
   List<Object> get props => [extencion ?? ''];
